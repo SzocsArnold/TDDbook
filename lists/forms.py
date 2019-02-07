@@ -14,6 +14,11 @@ class ItemForm(forms.models.ModelForm):
             'text': forms.fields.TextInput(attrs={
                 'placeholder': 'Enter a to-do item',
                 'class': 'form-control input-lg',
+                'id':'text',
             }),
         }
         error_messages = {'text':{'required': EMPTY_ITEM_ERROR}}
+    
+    def save(self, for_list):
+        self.instance.list = for_list
+        return super().save()        
