@@ -3,8 +3,7 @@ from django.test import TestCase
 from lists.forms import ItemForm, EMPTY_ITEM_ERROR 
 
 class ItemFormtest(TestCase):
-
-    
+           
 
     def test_form_item_input_has_placeholder_and_css_classes(self):
         form = ItemForm()

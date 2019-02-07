@@ -15,7 +15,8 @@ class FunctionalTest(StaticLiveServerTestCase):
     def setUp(self):
        self.browser = webdriver.Firefox(executable_path="C:\\Users\\Arnold\\geckodriver\\geckodriver.exe")
 
-    
+    def get_item_input_box(self):
+        return self.browser.find_element_by_id('text')
     
     def wait_for_row_in_list_table(self, row_text):
         start_time = time.time()
