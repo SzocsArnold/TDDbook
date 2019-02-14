@@ -51,6 +51,8 @@ class ViewAndAddToList(DetailView,CreateView):
         self.object = self.get_object()
         return self.form_class(for_list=self.object,data=self.request.POST)
 
+def my_lists(request, email):
+    return render(request, 'my_lists.html')
 
 
 
