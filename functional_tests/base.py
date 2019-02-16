@@ -9,17 +9,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from accounts.models import User
 from django.conf import settings
 
-
-class FunctionalTest(StaticLiveServerTestCase):
-   
-    
-    def setUp(self):
-       self.browser = webdriver.Firefox(executable_path="C:\\Users\\Arnold\\geckodriver\\geckodriver.exe")
-
-    def get_item_input_box(self):
-        return self.browser.find_element_by_id('text') 
-
-    def wait(fn):
+def wait(fn):
         def modified_fn(*args, **kwargs):
             MAX_WAIT = 10  
             start_time = time.time()
@@ -31,6 +21,18 @@ class FunctionalTest(StaticLiveServerTestCase):
                         raise e
                     time.sleep(0.5)
         return modified_fn
+
+
+class FunctionalTest(StaticLiveServerTestCase):
+   
+    
+    def setUp(self):
+       self.browser = webdriver.Firefox(executable_path="C:\\Users\\Arnold\\geckodriver\\geckodriver.exe")
+
+    def get_item_input_box(self):
+        return self.browser.find_element_by_id('text') 
+
+    
 
     @wait
     def wait_for(self, fn):
@@ -56,13 +58,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         navbar = self.browser.find_element_by_css_selector('.navbar')
         self.assertNotIn(email, navbar.text)
 
-    def add_list_item(self, item_text):
-        num_rows = len(self.browser.find_elements_by_css_selector('#id_list_table tr'))
-        self.get_item_input_box().send_keys(item_text)
-        self.get_item_input_box().send_keys(Keys.ENTER)
-        item_number = num_rows + 1
-        self.wait_for_row_in_list_table(f'{item_number}: {item_text}')
-
+    
     def create_pre_authenticated_session(self, email):
         user = User.objects.create(email=email)
         session = SessionStore()
